@@ -1,0 +1,33 @@
+{
+  "districts": [
+    { "district": "Gasabo", "latitude": -1.9461, "longitude": 30.0811 },
+    { "district": "Kicukiro", "latitude": -1.9536, "longitude": 30.0625 },
+    { "district": "Nyarugenge", "latitude": -1.9576, "longitude": 30.0605 },
+    { "district": "Musanze", "latitude": -1.5047, "longitude": 29.631 },
+    { "district": "Huye", "latitude": -2.6022, "longitude": 29.7345 },
+    { "district": "Rubavu", "latitude": -1.9501, "longitude": 29.7213 },
+    { "district": "Nyagatare", "latitude": -0.9377, "longitude": 29.6252 },
+    { "district": "Karongi", "latitude": -2.8764, "longitude": 29.3634 },
+    { "district": "Rulindo", "latitude": -1.973, "longitude": 29.7308 },
+    { "district": "Ruhango", "latitude": -2.0879, "longitude": 29.7298 },
+    { "district": "Gicumbi", "latitude": -1.8897, "longitude": 29.801 },
+    { "district": "Muhanga", "latitude": -2.1618, "longitude": 29.729 },
+    { "district": "Kamonyi", "latitude": -2.0108, "longitude": 29.9929 },
+    { "district": "Gisagara", "latitude": -2.5217, "longitude": 29.5391 },
+    { "district": "Bugesera", "latitude": -2.1597, "longitude": 30.1469 },
+    { "district": "Rusizi", "latitude": -2.5285, "longitude": 28.9088 },
+    { "district": "Nyanza", "latitude": -2.3433, "longitude": 29.743 },
+    { "district": "Kayonza", "latitude": -1.8489, "longitude": 30.0579 },
+    { "district": "Ngororero", "latitude": -2.0886, "longitude": 29.4234 },
+    { "district": "Nyabihu", "latitude": -1.7162, "longitude": 29.573 },
+    { "district": "Rutsiro", "latitude": -2.5044, "longitude": 29.1499 },
+    { "district": "Burera", "latitude": -1.5808, "longitude": 29.7369 },
+    { "district": "Nyamasheke", "latitude": -2.4928, "longitude": 29.3536 },
+    { "district": "Ruhango", "latitude": -2.0879, "longitude": 29.7298 },
+    { "district": "Kirehe", "latitude": -2.159, "longitude": 30.5336 },
+    { "district": "Rwamagana", "latitude": -1.9406, "longitude": 30.4381 },
+    { "district": "Karongi", "latitude": -2.8764, "longitude": 29.3634 },
+    { "district": "Ngororero", "latitude": -2.0886, "longitude": 29.4234 },
+    { "district": "Gakenke", "latitude": -1.7483, "longitude": 29.7626 }
+  ]
+}
