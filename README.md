@@ -1,6 +1,6 @@
-# Labor Force Dashboard
+# Addressing youth unemployment dashboard
 
-This project creates an interactive dashboard to explore labor force survey data especially for addressing unemployed Rwandan youth.
+This project creates an interactive dashboard to explore labor force survey data especially for addressing unemployed Rwandan youth. After founding that 25.6% of youth who's in 16-30 years old are unemployed which means 1 guy in 4 of youth are unemployed, Thereafter I came with the story of creating a dashboard that will highlight this severe condition and see if these insights can help to track where the problem at.
 
 ## How it works
 
