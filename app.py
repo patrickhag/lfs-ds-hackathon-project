@@ -1,10 +1,8 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import folium
-from streamlit_folium import folium_static
 from streamlit_option_menu import option_menu
-
+from map_for_unemployment import unemployment_according_to_location
 
 st.set_page_config(page_title='Rwanda Labour Force Survey Dashboard',
                    layout='wide')
@@ -13,33 +11,63 @@ st.subheader("Addressing Rwanda's Youth Jobs Challenge")
 
 st.markdown("""---""")
 
-
 # dataframes
 df_sheet_1 = pd.read_excel('RLFS_2022_Data_clean.xlsx', sheet_name='Table 0')
 df_sheet_2 = pd.read_excel('RLFS_2022_Data_clean.xlsx', sheet_name='Table 2')
 df_sheet_3 = pd.read_excel('RLFS_2022_Data_clean.xlsx', sheet_name='Table 3')
 df_sheet_4 = pd.read_excel('RLFS_2022_Data_clean.xlsx', sheet_name='Table 4')
 df_sheet_7 = pd.read_excel('RLFS_2022_Data_clean.xlsx', sheet_name='Table 7')
-df_sheet_8 = pd.read_excel('RLFS_2022_Data_clean.xlsx', sheet_name='Table 8')
 
-
-districts_df = df_sheet_8.iloc[:, :5]
 unemployed_youth_over = df_sheet_1.loc[0, 'Total']
 unemployed_secondary_graduates = df_sheet_1.loc[4, 'Total']
 unemployed_university_graduates = df_sheet_1.loc[5, 'Total']
-youth_neet = df_sheet_1.loc[7, 'Total']
+youth_neet = df_sheet_1.loc[6, 'Total']
 
 
-region = st.sidebar.multiselect(
-    "Filter by category",
+selected_age = st.sidebar.multiselect(
+    "Filter by age",
     options=df_sheet_4["Yrs"].unique(),
-    default=df_sheet_4["Yrs"].unique(),
 )
+selected_area = st.sidebar.multiselect(
+    "Filter by Area", ['Rural', 'Urban'])
 
-gender = st.sidebar.radio(
+
+def filter_data_location(selected_area):
+    clean_data_set = df_sheet_1.copy()
+
+    if 'Urban' in selected_area and 'Rural' in selected_area:
+        clean_data_set
+    elif 'Urban' in selected_area:
+        clean_data_set = clean_data_set.drop(columns=['Rural'], axis=1)
+    elif 'Rural' in selected_area:
+        clean_data_set = clean_data_set.drop(columns=['Urban'], axis=1)
+
+    return clean_data_set
+
+
+selected_gender = st.sidebar.radio(
     "Filter by gender",
     ['Male', 'Female'],
+    index=None
 )
+selected_gender
+
+
+def filter_based_gender(selected_gender):
+    clean_data_set = df_sheet_1.copy()
+
+    if 'Male' == selected_gender and 'Female' == selected_gender:
+        clean_data_set
+    if 'Male' == selected_gender:
+        clean_data_set = clean_data_set.drop(columns=['Female'], axis=1)
+    elif 'Female' == selected_gender:
+        clean_data_set = clean_data_set.drop(columns=['Male'], axis=1)
+
+    return clean_data_set
+
+
+df_gender_data = filter_based_gender(selected_gender)
+df_gender_data
 
 
 def charts_section():
@@ -48,7 +76,7 @@ def charts_section():
     with section_1:
         col1, col2 = st.columns(2, gap='small')
         with col1:
-            st.info("Unemployment Youth(16-30) ages", icon="⬆")
+            st.info("Overall Unemployment Youth(16-30) ages", icon="⬆")
             st.metric('th', value=f'{unemployed_youth_over:,.0f}')
 
             education_df = df_sheet_1.loc[df_sheet_1['Indicators'].isin(
@@ -71,8 +99,8 @@ def charts_section():
         fig = px.line(
             programs_df,
             y="Total",
+            x="Field of Education",
             title="Mostly likely Education took by Unemployed Youth",
-            color="Field of Education"
         )
         fig.update_layout(width=450)
         st.plotly_chart(fig)
@@ -105,25 +133,8 @@ def charts_section():
             st.info("Youth NEETs (not Employed or in Education)", icon="⬆")
             st.metric('milli', value=f'{youth_neet:,.0f}')
 
-    # df_sheet_2
-    # age_to_filter = st.slider('hour', 0, 23, 16)
-
-
-@st.cache_data()
-def unemployment_according_to_location():
-    st.write("<b>Overall unemployment accross districts</b>",
-             unsafe_allow_html=True)
-    m = folium.Map(location=[districts_df['lat'].mean(),
-                   districts_df['lon'].mean()], zoom_start=9)
-    for index, row in districts_df.iterrows():
-        folium.Marker([row['lat'], row['lon']],
-                      popup=f"District: {row['district']}\nUnemployment Rate: {row['rate']}%\nTotal: {row['total']:,.0f}"
-                      ).add_to(m)
-    folium_static(m)
-
 
 # sidebar
-
 def sidebar_contents():
     with st.sidebar:
         selected = option_menu(
