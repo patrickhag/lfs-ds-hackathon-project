@@ -45,6 +45,9 @@ def filter_data_location(selected_area):
     return clean_data_set
 
 
+df_selected_area = filter_data_location(selected_area)
+df_selected_area
+
 selected_gender = st.sidebar.radio(
     "Filter by gender",
     ['Male', 'Female'],
@@ -67,7 +70,7 @@ def filter_based_gender(selected_gender):
 
 
 df_gender_data = filter_based_gender(selected_gender)
-df_gender_data
+# df_gender_data
 
 
 def charts_section():
@@ -144,7 +147,8 @@ def sidebar_contents():
             default_index=0
         )
     if selected == "Charts":
-        charts_section()
+        pass
+        # charts_section()
     if selected == "Maps":
         unemployment_according_to_location()
 
