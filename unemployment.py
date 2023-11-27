@@ -1,34 +1,54 @@
 import pandas as pd
 import streamlit as st
-
 import plotly.express as px
 from st_btn_select import st_btn_select
 
-# st.subheader("Addressing Rwanda's Youth Jobs Challenge")
-# def render(){}
-# st.markdown("""---""")
-selection = st_btn_select(("Chart", "Data"))
-select = "Demographics"
-# dataframes
-df_sheet_1 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 0")
 drop_columns = ["Urban", "Rural"]
-select = st_btn_select(("Demographics", "gender"))
-# data = df_sheet_1.drop(columns=drop_columns, axis=0)
+selection = "Chart"
+select = None
 
 
-def render():
-    if select == "Demographics":
-        drop_columns = ["Urban", "Rural"]
-        return df_sheet_1.drop(columns=drop_columns, axis=0)
-    if select == "gender":
+@st.cache_data
+def load_data():
+    return pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 0").iloc[1:]
+
+
+selection = st_btn_select(("Chart", "Data"))
+
+
+def render(data, select=""):
+    drop_columns = []
+    if select == "Residence":
         drop_columns = ["Male", "Female"]
-        return df_sheet_1.drop(columns=drop_columns, axis=0)
+    if select == "gender":
+        drop_columns = ["Urban", "Rural"]
+    return data.drop(columns=drop_columns, axis=0)
 
 
-if selection == "Data":
-    # render()
-    st.write(render())
-if selection == "Chart":
-    data = render()
-    st.write(data)
-    st.write(px.bar(data, x="Indicators", y="Total"))
+def main():
+    data = load_data()
+
+    if selection == "Data":
+        select = st.radio("Filter data based on your need:", ("Residence", "gender"))
+        st.write(render(data, select))
+    elif selection == "Chart":
+        select = st.radio("Filter data based on your need:", ("Percentage(%)", "Total"))
+
+        processed_data = render(data)
+        fig = px.bar(
+            data_frame=processed_data,
+            x="Indicators",
+            y=select,
+            height=500,
+            title="Youth unemployment rate by education level",
+        )
+        if select == "Total":
+            fig.update_traces(texttemplate="%{y:,}", textposition="outside")
+        else:
+            fig.update_layout(yaxis_range=[0, 100])
+            fig.update_traces(texttemplate="%{y:.2f}%", textposition="outside")
+
+        st.plotly_chart(fig)
+
+
+main()
