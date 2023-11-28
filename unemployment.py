@@ -5,9 +5,14 @@ import altair as alt
 from st_btn_select import st_btn_select
 from pie import filter
 
-drop_columns = ["Urban", "Rural"]
-select = None
 RWANDAN_POPULATION = 13000000
+drop_columns = ["Urban", "Rural"]
+gender = ("Male", "Female")
+select = None
+age_selection=None
+selected_area=None
+
+df_sheet_4 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
 
 
 @st.cache_data
@@ -26,15 +31,20 @@ def render(data, select=""):
         drop_columns = ["Urban", "Rural"]
     return data.drop(columns=drop_columns, axis=0)
 
+preview = st.checkbox('filter by education level')
 
 def main():
     data = load_data()
 
+    age_selection = st.sidebar.multiselect("filter by age", options=df_sheet_4['Yrs'].unique(), default=df_sheet_4['Yrs'].unique())
     if selection == "Data":
         select = st.sidebar.radio(
             "Filter data based on your need:", ("Residence", "gender")
         )
-        st.write(render(data, select))
+        if preview:
+            st.write(render(data, select))
+        else:
+            st.write(render(df_sheet_4.loc[df_sheet_4["Yrs"].isin(age_selection)], select))
     elif selection == "Charts":
         select = st.sidebar.radio(
             "Filter data based on your need:", ("Percentage(%)", "Total")
@@ -55,16 +65,13 @@ def main():
 
         st.plotly_chart(fig)
     if selection == "Customize chart":
-        df_sheet_4 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
-
-        selected_area = st.sidebar.radio("Filter by Area", ["Rural", "Urban"])
-        select = st.sidebar.radio("Filter gender:", ("Male", "Female"))
+        selected_area = st.sidebar.radio("Filter by Area", drop_columns)
+        slct = st.sidebar.radio("Filter gender:", gender)
         melted_df = pd.melt(
-            df_sheet_4,
+            df_sheet_4.loc[df_sheet_4["Yrs"].isin(age_selection)],
             id_vars=["Category", "Yrs"],
-            value_vars=[selected_area, select],
+            value_vars=[selected_area, slct],   
         )
-
         chart = (
             alt.Chart(melted_df)
             .mark_bar()
