@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import altair as alt
-from pie import filter
 
 st.set_page_config(layout="wide")
 RWANDAN_POPULATION = 13000000
@@ -12,7 +11,7 @@ select = None
 age_selection = None
 selected_area = None
 
-df_sheet_4 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
+df_sheet_4 = pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
 
 charts, custom_chart, data_tables = st.tabs(
     ["Education levels", "Youth labour force", "Table of data"]
@@ -21,7 +20,9 @@ charts, custom_chart, data_tables = st.tabs(
 
 @st.cache_data
 def load_data():
-    return pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 0").iloc[1:]
+    return pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 0").iloc[
+        1:
+    ]
 
 
 def render(data, select=""):

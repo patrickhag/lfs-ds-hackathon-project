@@ -3,16 +3,8 @@ from streamlit_folium import folium_static
 import pandas as pd
 import plotly.express as px
 
-# import numpy as np
-
-# chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["col1", "col2", "col3"])
-
-# st.bar_chart(
-#     chart_data, x="col1", y=["col2", "col3"], color=["#FF0000", "#0000FF"]  # Optional
-# )
-
 Chart, Data = st.tabs(["Charts", "Table of ata"])
-df_sheet_2 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
+df_sheet_2 = pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
 dd = ["Male", "Female", "All"]
 select = st.sidebar.radio("Filter data based on gender:", dd)
 with Data:
