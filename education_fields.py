@@ -4,7 +4,6 @@ import pandas as pd
 from st_btn_select import st_btn_select
 import plotly.express as px
 
-
 selection = st_btn_select(("Chart", "Data"))
 df_sheet_2 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
 dd = ["Male", "Female", "All"]
