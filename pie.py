@@ -34,17 +34,3 @@ def filter(df, select, selected_age, selected_area):
     df = filter_data_gender(select, df)
     df = filter_data_age(selected_age, df)
     return filter_data_location(selected_area, df)
-
-
-def df():
-    df_sheet_4 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
-
-    selected_age = st.sidebar.multiselect(
-        "Filter by age",
-        options=df_sheet_4["Yrs"].unique(),
-    )
-
-    selected_area = st.sidebar.radio("Filter by Area", ["Rural", "Urban"])
-    select = st.sidebar.radio("Filter gender:", ("Male", "Female"))
-
-    return filter(df_sheet_4, select, selected_age, selected_area)
