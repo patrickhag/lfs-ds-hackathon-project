@@ -1,3 +1,5 @@
+<img src="https://www.statistics.gov.rw/sites/default/files/images/logo.png" alt="NISR logo">
+
 # Addressing youth unemployment dashboard
 
 This project creates an interactive dashboard to explore labor force survey data especially for addressing unemployed Rwandan youth. After founding that 25.6% of youth who's in 16-30 years old are unemployed which means 1 guy in 4 of youth are unemployed, Thereafter I came with the story of creating a dashboard that will highlight this severe condition and see if these insights can help to track where the problem at.
@@ -43,6 +45,10 @@ Some ways to contribute:
 - Add new data visualizations
 - Improve interactive features
 - Write documentation
+
+## Important links
+- [Hackathon & Infographics Competition - 2023 Edition](https://statistics.gov.rw/about-us/hackathon-competition-2023-edition)
+- [Labour Force Survey Annual Report 2022](https://www.statistics.gov.rw/publication/1919)
 
 ## Contact
 
