@@ -11,7 +11,13 @@ select = None
 age_selection = None
 selected_area = None
 
-df_sheet_4 = pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
+
+@st.cache_data
+def load_data_sheet_4():
+    return pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 4")
+
+
+df_sheet_4 = load_data_sheet_4()
 
 charts, custom_chart, data_tables = st.tabs(
     ["Education levels", "Youth labour force", "Table of data"]
@@ -25,31 +31,33 @@ def load_data():
     ]
 
 
+@st.cache_data
 def render(data, select=""):
     drop_columns = []
     if select == "Residence":
         drop_columns = ["Male", "Female"]
-    if select == "gender":
+    elif select == "gender":
         drop_columns = ["Urban", "Rural"]
+    else:
+        return data  # No need to drop columns if select is not "Residence" or "gender"
     return data.drop(columns=drop_columns, axis=0)
 
 
 data = load_data()
+unique_values = df_sheet_4["Yrs"].unique()
 age_selection = st.sidebar.multiselect(
-    "filter by age",
-    options=df_sheet_4["Yrs"].unique(),
-    default=df_sheet_4["Yrs"].unique(),
+    "filter by age", options=unique_values, default=unique_values
 )
 
 with charts:
     col1, col2 = st.columns([1, 3.5])
     with col1:
         select = col1.radio(
-            "Filter data based on your need:",
+            "Select data filter option:",
             ("Percentage(%)", "Total"),
             captions=[
-                "View chart based on percentage population",
-                "View chart based on total population",
+                "Filter data based on percentage population",
+                "Filter data based on total population",
             ],
         )
     with col2:
@@ -63,12 +71,11 @@ with charts:
         )
         if select == "Total":
             fig.update_traces(texttemplate="%{y:,}", textposition="outside")
-
         else:
             fig.update_layout(yaxis_range=[0, 100])
             fig.update_traces(texttemplate="%{y:.2f}%", textposition="outside")
-
         st.plotly_chart(fig)
+
 with custom_chart:
     col1, col2 = st.columns([1, 3.5])
     with col1:
@@ -102,7 +109,6 @@ with custom_chart:
                 labelPadding=10,
             )
         )
-
         st.altair_chart(chart, use_container_width=True)
 
 with data_tables:
@@ -111,11 +117,7 @@ with data_tables:
         preview = st.checkbox("filter by education level")
         select = st.radio("Filter data based on your need:", ("Residence", "gender"))
     with col2:
-        st.markdown(
-            """
-                    ### Unemployment based on education level, gender and residence
-                    """
-        )
+        st.markdown("### Unemployment based on education level, gender and residence")
         if preview:
             st.write(render(data, select))
         else:
@@ -123,7 +125,5 @@ with data_tables:
                 render(df_sheet_4.loc[df_sheet_4["Yrs"].isin(age_selection)], select)
             )
         st.write(
-            """
-            Check or uncheck __filter by education level__ checkbox to view different datasets.
-            """
+            "Check or uncheck __filter by education level__ checkbox to view different datasets."
         )

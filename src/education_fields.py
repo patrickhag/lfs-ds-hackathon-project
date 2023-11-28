@@ -3,15 +3,21 @@ from streamlit_folium import folium_static
 import pandas as pd
 import plotly.express as px
 
-Chart, Data = st.tabs(["Charts", "Table of ata"])
-df_sheet_2 = pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
+Chart, Data = st.tabs(["Charts", "Table of data"])
+
+
+@st.cache_data
+def load_data():
+    return pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
+
+
+df_sheet_2 = load_data()
 dd = ["Male", "Female", "All"]
 select = st.sidebar.radio("Filter data based on gender:", dd)
 with Data:
-    if select == "All":
-        st.write(df_sheet_2)
-    else:
-        st.write(df_sheet_2.drop(columns=[select, "Total"]))
+    st.write(df_sheet_2) if select == "All" else st.write(
+        df_sheet_2.drop(columns=[select, "Total"])
+    )
 with Chart:
     if select == "All":
         st.markdown(
