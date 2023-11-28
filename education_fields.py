@@ -7,7 +7,7 @@ import plotly.express as px
 selection = st_btn_select(("Chart", "Data"))
 df_sheet_2 = pd.read_excel("RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
 dd = ["Male", "Female", "All"]
-select = st.radio("Filter data based on gender:", dd)
+select = st.sidebar.radio("Filter data based on gender:", dd)
 if selection == "Data":
     if select == "All":
         st.write(df_sheet_2)
