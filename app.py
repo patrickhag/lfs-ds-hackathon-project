@@ -5,6 +5,6 @@ add_page_title()
 show_pages(
     [
         Page("unemployment.py", "youth unemployment", "🏠"),
-        Page("other_pages/page2.py", "Page 2", ":books:"),
+        Page("education_fields.py", "education fields", ":books:"),
     ]
 )
