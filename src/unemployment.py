@@ -105,8 +105,7 @@ with custom_chart:
                 title="Youth unemployment rate by labour force",
             )
             .configure_axis(
-                titlePadding=20,
-                labelPadding=10,
+                titlePadding=20, labelPadding=10, labelFontSize=18, titleFontSize=18
             )
         )
         st.altair_chart(chart, use_container_width=True)

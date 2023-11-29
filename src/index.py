@@ -8,7 +8,7 @@ from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="Rwanda Labour Force Survey Dashboard", layout="wide")
 
-st.subheader("Addressing Rwanda's Youth Jobs Challenge")
+st.subheader("Addressing Rwanda's Youth Unemployment")
 
 st.markdown("""---""")
 
@@ -61,7 +61,13 @@ def charts_section():
             title="Unemployment rates by level of education",
             color="Indicators",
         )
-        fig.update_layout(width=450)
+        fig.update_layout(
+            width=450,
+            yaxis_range=[0, 100],
+            title_font_size=18,
+            legend_title_font_size=18,
+            font_size=18,
+        )
         st.plotly_chart(fig)
 
         with col2:

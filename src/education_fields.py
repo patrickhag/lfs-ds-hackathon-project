@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_folium import folium_static
 import pandas as pd
 import plotly.express as px
 
@@ -15,9 +14,10 @@ df_sheet_2 = load_data()
 dd = ["Male", "Female", "All"]
 select = st.sidebar.radio("Filter data based on gender:", dd)
 with Data:
-    st.write(df_sheet_2) if select == "All" else st.write(
-        df_sheet_2.drop(columns=[select, "Total"])
-    )
+    if select == "All":
+        st.write(df_sheet_2)
+    else:
+        st.write(df_sheet_2.drop(columns=[select, "Total"]))
 with Chart:
     if select == "All":
         st.markdown(
