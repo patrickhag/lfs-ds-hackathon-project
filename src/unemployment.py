@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import altair as alt
 
 st.set_page_config(layout="wide")
 RWANDAN_POPULATION = 13000000
@@ -87,29 +86,28 @@ with custom_chart:
             id_vars=["Category", "Yrs"],
             value_vars=[selected_area, slct],
         )
-        chart = (
-            alt.Chart(melted_df)
-            .mark_bar()
-            .encode(
-                x=alt.X("Category:N", title="Category"),
-                y=alt.Y(
-                    "sum(value):Q",
-                    title="Total",
-                    scale=alt.Scale(domain=[0, RWANDAN_POPULATION]),
-                ),
-                color=alt.Color("Yrs:N", title="Years"),
-            )
-            .properties(
-                width=alt.Step(60),
-                height=500,
-                title="Youth unemployment rate by labour force",
-            )
-            .configure_axis(
-                titlePadding=20, labelPadding=10, labelFontSize=18, titleFontSize=18
-            )
-        )
-        st.altair_chart(chart, use_container_width=True)
 
+        chart = px.bar(
+            melted_df,
+            x="Category",
+            y="value",
+            color="Yrs",
+            title="Youth unemployment rate by labour force",
+            labels={"value": "Total", "Yrs": "Years"},
+            height=500,
+            width=600,
+            category_orders={
+                "Yrs": sorted(df_sheet_4["Yrs"].unique())
+            },  # Specify the order of years
+        )
+
+        chart.update_layout(
+            xaxis_title="Category",
+            yaxis_title="Total",
+            yaxis=dict(range=[0, RWANDAN_POPULATION]),
+        )
+
+        st.plotly_chart(chart, use_container_width=True)
 with data_tables:
     col1, col2 = st.columns([1, 3.5])
     with col1:
