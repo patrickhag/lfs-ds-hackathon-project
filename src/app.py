@@ -4,6 +4,7 @@ add_page_title()
 
 show_pages(
     [
+        Page("src/index.py", "Home page", ":books:"),
         Page("src/unemployment.py", "youth unemployment", "🏠"),
         Page("src/education_fields.py", "education fields", ":books:"),
         Page("src/youth_neets.py", "Youth Neets", ":books:"),
