@@ -1,7 +1,12 @@
-from src.unemployment import Page
-from src.education_fields import Page
+from st_pages import Page, show_pages, add_page_title
 
-pages = [
-    Page("src/unemployment.py", "youth unemployment", "🏠"),
-    Page("src/education_fields.py", "education fields", ":books:"),
-]
+add_page_title()
+
+show_pages(
+    [
+        Page("src/unemployment.py", "youth unemployment", "🏠"),
+        Page("src/education_fields.py", "education fields", ":books:"),
+        Page("src/youth_neets.py", "Youth Neets", ":books:"),
+        Page("src/map_for_unemployment.py", "View unemployment map", ":books:"),
+    ]
+)
