@@ -22,7 +22,7 @@ with Chart:
     if select == "All":
         st.markdown(
             """
-                    #### Youth eunemployment rate by field of studies"""
+                    #### Youth unemployment rate by field of studies"""
         )
         fig = st.bar_chart(
             data=df_sheet_2,
