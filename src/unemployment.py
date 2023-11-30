@@ -78,36 +78,44 @@ with charts:
 with custom_chart:
     col1, col2 = st.columns([1, 3.5])
     with col1:
-        selected_area = st.radio("Filter by Area:", drop_columns)
-        slct = st.radio("Filter gender:", gender)
+        general_view = st.checkbox("General View", value=True)
+        if not general_view:
+            selected_area = st.radio("Filter by Area:", drop_columns)
+            slct = st.radio("Filter gender:", gender)
+
     with col2:
-        melted_df = pd.melt(
-            df_sheet_4.loc[df_sheet_4["Yrs"].isin(age_selection)],
-            id_vars=["Category", "Yrs"],
-            value_vars=[selected_area, slct],
-        )
+        if general_view:
+            st.bar_chart(
+                df_sheet_4.loc[df_sheet_4["Yrs"].isin(age_selection)],
+                x="Category",
+                y="Total",
+            )
+        else:
+            melted_df = pd.melt(
+                df_sheet_4.loc[df_sheet_4["Yrs"].isin(age_selection)],
+                id_vars=["Category", "Yrs"],
+                value_vars=[selected_area, slct],
+            )
 
-        chart = px.bar(
-            melted_df,
-            x="Category",
-            y="value",
-            color="Yrs",
-            title="Youth unemployment rate by labour force",
-            labels={"value": "Total", "Yrs": "Years"},
-            height=500,
-            width=600,
-            category_orders={
-                "Yrs": sorted(df_sheet_4["Yrs"].unique())
-            },  # Specify the order of years
-        )
+            chart = px.bar(
+                melted_df,
+                x="Category",
+                y="value",
+                color="Yrs",
+                title="Youth unemployment rate by labour force",
+                labels={"value": "Total", "Yrs": "Years"},
+                height=500,
+                width=600,
+                category_orders={"Yrs": sorted(df_sheet_4["Yrs"].unique())},
+            )
 
-        chart.update_layout(
-            xaxis_title="Category",
-            yaxis_title="Total",
-            yaxis=dict(range=[0, RWANDAN_POPULATION]),
-        )
+            chart.update_layout(
+                xaxis_title="Category",
+                yaxis_title="Total",
+                yaxis=dict(range=[0, RWANDAN_POPULATION]),
+            )
 
-        st.plotly_chart(chart, use_container_width=True)
+            st.plotly_chart(chart, use_container_width=True)
 with data_tables:
     col1, col2 = st.columns([1, 3.5])
     with col1:

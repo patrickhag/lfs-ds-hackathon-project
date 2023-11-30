@@ -11,7 +11,7 @@ def load_data():
 
 
 df_sheet_2 = load_data()
-dd = ["Male", "Female", "All"]
+dd = ["All", "Male", "Female"]
 select = st.sidebar.radio("Filter data based on gender:", dd)
 with Data:
     if select == "All":
