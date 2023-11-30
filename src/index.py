@@ -11,7 +11,6 @@ st.subheader("Addressing Rwanda's Youth Unemployment")
 
 st.markdown("""---""")
 
-
 # dataframes
 df_sheet_1 = pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 0")
 df_sheet_2 = pd.read_excel("assets/RLFS_2022_Data_clean.xlsx", sheet_name="Table 2")
@@ -127,7 +126,7 @@ st.sidebar.markdown(
                     #
                     #
                     #
-                    #
+                    #                    #
                     #
                      Made with ❤️ by Data-pioneers """
 )

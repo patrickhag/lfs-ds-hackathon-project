@@ -3,6 +3,12 @@ import streamlit as st
 import plotly.express as px
 
 st.set_page_config(layout="wide")
+
+st.markdown(
+    """
+                    #### Youth unemployment rate by education level"""
+)
+
 RWANDAN_POPULATION = 13078028
 
 drop_columns = ["Urban", "Rural"]
@@ -20,7 +26,7 @@ def load_data_sheet_4():
 df_sheet_4 = load_data_sheet_4()
 
 charts, custom_chart, data_tables = st.tabs(
-    ["Education levels", "Youth labour force", "Table of data"]
+    ["Education levels", "Youth labour force", "Data"]
 )
 
 
@@ -123,7 +129,6 @@ with data_tables:
         preview = st.checkbox("filter by education level")
         select = st.radio("Filter data based on your need:", ("Residence", "gender"))
     with col2:
-        st.markdown("### Unemployment based on education level, gender and residence")
         if preview:
             st.write(render(data, select))
         else:

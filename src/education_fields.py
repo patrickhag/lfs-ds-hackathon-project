@@ -2,7 +2,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-Chart, Data = st.tabs(["Charts", "Table of data"])
+st.markdown(
+    """
+                    #### Youth unemployment rate by field of studies"""
+)
+
+Chart, Data = st.tabs(["Charts", "Data"])
 
 
 @st.cache_data
