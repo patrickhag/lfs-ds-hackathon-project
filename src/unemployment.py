@@ -3,7 +3,8 @@ import streamlit as st
 import plotly.express as px
 
 st.set_page_config(layout="wide")
-RWANDAN_POPULATION = 13000000
+RWANDAN_POPULATION = 13078028
+
 drop_columns = ["Urban", "Rural"]
 gender = ("Male", "Female")
 select = None

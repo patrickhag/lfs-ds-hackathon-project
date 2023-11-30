@@ -5,7 +5,6 @@ import folium
 from streamlit_folium import folium_static
 from streamlit_option_menu import option_menu
 
-
 st.set_page_config(page_title="Rwanda Labour Force Survey Dashboard", layout="wide")
 
 st.subheader("Addressing Rwanda's Youth Unemployment")
